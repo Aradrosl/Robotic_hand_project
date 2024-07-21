@@ -1,0 +1,75 @@
+#include <Servo.h>
+
+
+int xPin = A7;
+int servo_thumb = 6;
+int servo_Finger1 = A1;
+int servo_Finger2 = A2;
+int servo_Finger3 = A3;
+int servo_Finger4 = A4;
+
+int xPos = 0;
+int xPrev = 0;
+int angle, pwm, prevAngle;
+
+
+void setup() {
+  // put your setup code here, to run once:
+Serial.begin(9600);
+
+pinMode(xPin, INPUT);
+pinMode(servo_thumb, OUTPUT);
+pinMode(servo_Finger1, OUTPUT);
+pinMode(servo_Finger2, OUTPUT);
+pinMode(servo_Finger3, OUTPUT);
+pinMode(servo_Finger4, OUTPUT);
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+xPos = analogRead(xPin);
+int posServo = xPos / 5.65;
+
+if(xPrev != posServo && xPrev != (posServo-1) && xPrev != (posServo+1)); 
+xPrev = posServo;
+Serial.println(posServo);
+turnServo(posServo);
+}
+
+void turnServo(int angle)
+{
+if(angle< prevAngle){for(int i = prevAngle; i >= angle; i-=5)
+  {
+    servoPulse();
+  } 
+}
+else if (angle >= prevAngle){for(int i = prevAngle; i <= angle; i+=5){servoPulse();
+}
+}
+}
+
+
+void servoPulse(){
+  xPos = analogRead(xPin);
+  angle = xPos/10.65;
+  pwm = (angle * 20)+ 500;
+
+  digitalWrite(servo_thumb, HIGH);
+  digitalWrite(servo_Finger1, HIGH);
+  digitalWrite(servo_Finger2, HIGH);
+  digitalWrite(servo_Finger3, HIGH);
+  digitalWrite(servo_Finger4, HIGH);
+
+  delayMicroseconds(pwm);
+
+  digitalWrite(servo_thumb, LOW);
+  digitalWrite(servo_Finger1, LOW);
+  digitalWrite(servo_Finger2, LOW);
+  digitalWrite(servo_Finger3, LOW);
+  digitalWrite(servo_Finger4, LOW);
+  delay(15);
+
+
+
+}
