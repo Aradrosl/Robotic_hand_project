@@ -1,0 +1,39 @@
+#include <Servo.h> 
+Servo myservo1;
+Servo myservo2;
+Servo myservo3;
+Servo myservo4;
+Servo myservo5;
+const int threshValue = 1023;
+void setup() 
+{ 
+  myservo1.attach(6);
+  myservo2.attach(A1);
+  myservo3.attach(A2);
+  myservo4.attach(A3);
+  myservo5.attach(A4);
+} 
+
+void loop() 
+{ 
+  int value = analogRead(A0);
+
+  if(value < threshValue)        
+  { 
+          
+          int servo_position = 0;
+            myservo1.writeMicroseconds(8000);
+            myservo2.writeMicroseconds(8000);
+            myservo3.writeMicroseconds(8000);
+            myservo4.writeMicroseconds(8000);
+            myservo5.writeMicroseconds(8000);  
+  }
+  else 
+  { int servo_position = 180;
+            myservo1.writeMicroseconds(300000);
+            myservo2.writeMicroseconds(300000);
+            myservo3.writeMicroseconds(300000);
+            myservo4.writeMicroseconds(300000);
+            myservo5.writeMicroseconds(300000);
+  } 
+}
